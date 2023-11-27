@@ -1,0 +1,28 @@
+{
+  "name": "fullstackweb-osa3",
+  "version": "1.0.0",
+  "description": "Part3 of fullstackweb course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikkoMur/FullStackWeb-osa3.git"
+  },
+  "author": "Mikko Murhu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MikkoMur/FullStackWeb-osa3/issues"
+  },
+  "homepage": "https://github.com/MikkoMur/FullStackWeb-osa3#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,35 @@
+# Make a new entry
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Four",
+    "number": "444-444-444"
+}
+
+###
+# delete id: 2
+DELETE http://localhost:3001/api/persons/2
+
+###
+# get all
+GET http://localhost:3001/api/persons
+
+# Bad requests:
+###
+# Missing name
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "number": "9001"
+}
+
+###
+# Missing number
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Numberless"
+}
