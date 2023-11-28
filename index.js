@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
+const Person = require('./models/person')
 
 app.use(express.json())
 app.use(express.static('build'))
@@ -41,8 +43,14 @@ let persons = [
     }
   ]
 
-app.get('/api/persons', (req, res) => {
-    res.json(persons)
+// app.get('/api/persons', (req, res) => {
+//     res.json(persons)
+// })
+
+app.get('/api/persons', (request, response) => {
+  Person.find({}).then(person => {
+    response.json(person)
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -50,17 +58,17 @@ app.get('/info', (req, res) => {
     res.send(content)
 })
 
+
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    
-  
+  Person.findById(request.params.id).then(person => {
+    console.log(person)
     if (person) {
       response.json(person)
     } else {
       response.status(404).end()
     }
   })
+})
 
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -69,38 +77,54 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
-app.post('/api/persons', (request, response) => {
-    const body = request.body
+// app.post('/api/persons', (request, response) => {
+//     const body = request.body
   
-    if (!body.name) {
-      return response.status(400).json({ 
-        error: 'name missing' 
-      })
-    }
-    if (!body.number) {
-        return response.status(400).json({ 
-          error: 'number missing' 
-        })
-    }
-    if (persons.map(person => person.name).includes(body.name)) {
-        return response.status(400).json({ 
-          error: `A number for a person named '${body.name}' aready exists in the phonebook` 
-        })
-    } 
+//     if (!body.name) {
+//       return response.status(400).json({ 
+//         error: 'name missing' 
+//       })
+//     }
+//     if (!body.number) {
+//         return response.status(400).json({ 
+//           error: 'number missing' 
+//         })
+//     }
+//     if (persons.map(person => person.name).includes(body.name)) {
+//         return response.status(400).json({ 
+//           error: `A number for a person named '${body.name}' aready exists in the phonebook` 
+//         })
+//     } 
 
-    const person = {
-      name: body.name,
-      number: body.number,
-      id: Math.floor(Math.random()*10**9),
-    }
+//     const person = {
+//       name: body.name,
+//       number: body.number,
+//       id: Math.floor(Math.random()*10**9),
+//     }
   
-    persons = persons.concat(person)
+//     persons = persons.concat(person)
   
-    response.json(persons)
+//     response.json(persons)
+// })
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  // if (body.content === undefined) {
+  //   return response.status(400).json({ error: 'content missing' })
+  // }
+  console.log(body)
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
+  console.log(person)
+
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
-
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

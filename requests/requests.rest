@@ -15,6 +15,13 @@ DELETE http://localhost:3001/api/persons/2
 # get all
 GET http://localhost:3001/api/persons
 
+###
+# get 65662f3247f558952be88b1f
+GET http://localhost:3001/api/persons/65662f3247f558952be88b1f
+###
+# get unexisting
+GET http://localhost:3001/api/persons/65662f3247f558952be88b1e
+
 # Bad requests:
 ###
 # Missing name
