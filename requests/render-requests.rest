@@ -1,0 +1,35 @@
+# Make a new entry
+POST https://fullstackweb-osa3-mikmur.onrender.com/api/persons
+content-type: application/json
+
+{
+    "name": "Four",
+    "number": "444-444-444"
+}
+
+###
+# delete id: 2
+DELETE https://fullstackweb-osa3-mikmur.onrender.com/api/persons/2
+
+###
+# get all
+GET https://fullstackweb-osa3-mikmur.onrender.com/api/persons
+
+# Bad requests:
+###
+# Missing name
+POST https://fullstackweb-osa3-mikmur.onrender.com/api/persons
+content-type: application/json
+
+{
+    "number": "9001"
+}
+
+###
+# Missing number
+POST https://fullstackweb-osa3-mikmur.onrender.com/api/persons
+content-type: application/json
+
+{
+    "name": "Numberless"
+}
