@@ -8,8 +8,8 @@ content-type: application/json
 }
 
 ###
-# delete id: 2
-DELETE http://localhost:3001/api/persons/2
+# delete id: 656648047aa4a5057622077f
+DELETE http://localhost:3001/api/persons/656648047aa4a5057622077f
 
 ###
 # get all
@@ -21,6 +21,11 @@ GET http://localhost:3001/api/persons/65662f3247f558952be88b1f
 ###
 # get unexisting
 GET http://localhost:3001/api/persons/65662f3247f558952be88b1e
+
+
+###
+# info
+GET http://localhost:3001/info
 
 # Bad requests:
 ###
