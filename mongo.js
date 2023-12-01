@@ -7,7 +7,7 @@ if (process.argv.length<3) {
 
 const password = process.argv[2]
 
-const url = 
+const url =
   `mongodb+srv://fullstack:${password}@cluster0.eopu1g5.mongodb.net/phonebookApp?retryWrites=true&w=majority`
 
 mongoose.set('strictQuery', false)
@@ -23,11 +23,11 @@ const Person = mongoose.model('Person', personSchema)
 if (process.argv.length<4) {
   console.log('phonebook:')
   Person.find({}).then(result => {
-      result.forEach(person => {
-        console.log(`${person.name} ${person.number}`)
-      })
-      mongoose.connection.close()
+    result.forEach(person => {
+      console.log(`${person.name} ${person.number}`)
     })
+    mongoose.connection.close()
+  })
 }
 else {
   const person = new Person({
@@ -35,7 +35,7 @@ else {
     number: process.argv[4],
   })
 
-  person.save().then(result => {
+  person.save().then(() => {
     console.log('info saved!')
     mongoose.connection.close()
   })

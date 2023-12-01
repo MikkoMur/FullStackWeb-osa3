@@ -10,38 +10,20 @@ app.use(express.static('build'))
 app.use(cors())
 
 const custom = morgan((tokens, req, res) => {
-    report = [
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res),
-        tokens.res(req, res, 'content-length'), '-',
-        tokens['response-time'](req, res), 'ms'
-      ]
-    if (tokens.method(req, res) === "POST") {
-        report = report.concat(JSON.stringify(req.body))
-    }
-    return report.join(' ')
-  })
+  const report = [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ]
+  if (tokens.method(req, res) === 'POST') {
+    return report.concat(JSON.stringify(req.body)).join(' ')
+  }
+  return report.join(' ')
+})
 
 app.use(custom)
-
-// let persons = [
-//     {
-//       id: 1,
-//       name: "One",
-//       number: "111-111-111"
-//     },
-//     {
-//       id: 2,
-//       name: "Two",
-//       number: "222-222-222"
-//     },
-//     {
-//       id: 3,
-//       name: "Three",
-//       number: "333-333-333"
-//     }
-//   ]
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(person => {
@@ -65,12 +47,12 @@ app.get('/api/persons/:id', (request, response, next) => {
       response.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -102,7 +84,7 @@ app.post('/api/persons', (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
@@ -122,5 +104,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
